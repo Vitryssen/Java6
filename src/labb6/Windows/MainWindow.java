@@ -38,21 +38,21 @@ import labb6.Socket.Client;
  */
 public class MainWindow {
     //Main window
-    private JFrame f;  
+    private final JFrame f;  
     //DAO's
-    private ChatDAO chatDao = new ChatDAOImp();
-    private FriendDAO friendDao = new FriendDAOImp();
+    private final ChatDAO chatDao = new ChatDAOImp();
+    private final FriendDAO friendDao = new FriendDAOImp();
     //Windows
-    private TopWindow topWindow = new TopWindow();
-    private ChatWindow chatWindow = new ChatWindow();
-    private FriendWindow friendsWindow = new FriendWindow();
+    private final TopWindow topWindow = new TopWindow();
+    private final ChatWindow chatWindow = new ChatWindow();
+    private final FriendWindow friendsWindow = new FriendWindow();
     //Components
-    private JCheckBox publicButton = topWindow.getPublicButton();
-    private JCheckBox privateButton = topWindow.getPrivateButton();
+    private final JCheckBox publicButton = topWindow.getPublicButton();
+    private final JCheckBox privateButton = topWindow.getPrivateButton();
     //Variables
     boolean privateMode = false;
     //Network socket
-    private Client readerThread = new Client(chatDao, "0.0.0.0", 8000);//Skolan : "chatbot.miun.se", 8000 hemma: "0.0.0.0", 8000
+    private final Client readerThread = new Client(chatDao, "chatbot.miun.se", 8000);//Skolan : "chatbot.miun.se", 8000 hemma: "0.0.0.0", 8000
     public MainWindow() throws IOException{
         f=new JFrame();  
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -87,43 +87,41 @@ public class MainWindow {
         f.pack();
         f.setVisible(true); 
         f.addComponentListener(new ComponentAdapter() {
+            @Override
             public void componentResized(ComponentEvent componentEvent) {
                 resize();
             }
         });
         f.addWindowListener(new WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent e) {
                 exit();
             }
         });
     }
-    public void writeThread(){
-        new Thread(new Runnable() {
-            public void run() {
-                while(true){
-                    // Runs inside of the Swing UI thread
-                    SwingUtilities.invokeLater(new Runnable() {
-                        public void run() {
-                            friendDao.setFriendlist(readerThread.getFriends());
-                            populateFriendlist();
-                            if(chatWindow.getChatLabel().getText() != "Not chatting"){
-                                if(privateMode){
-                                    //chatDao.setPrivateChat(readerThread.getPrivateMessages());
-                                    loadPrivateChat();
-                                }
-                                else{
-                                    //chatDao.setPublicChat(readerThread.getPublicMessages());
-                                    loadPublicChat();
-                                }
-                            }
+    private void writeThread(){
+        new Thread(() -> {
+            while(true){
+                // Runs inside of the Swing UI thread
+                SwingUtilities.invokeLater(() -> {
+                    friendDao.setFriendlist(readerThread.getFriends());
+                    populateFriendlist();
+                    if(!"Not chatting".equals(chatWindow.getChatLabel().getText())){
+                        if(privateMode){
+                            //chatDao.setPrivateChat(readerThread.getPrivateMessages());
+                            loadPrivateChat();
                         }
-                    });
-                    try {
-                        java.lang.Thread.sleep(100);
+                        else{
+                            //chatDao.setPublicChat(readerThread.getPublicMessages());
+                            loadPublicChat();
+                        }
                     }
-                    catch(Exception e) { 
-                        System.out.println("Write Thread: "+e);
-                    }
+                });
+                try {
+                    java.lang.Thread.sleep(100);
+                }
+                catch(InterruptedException e) {
+                    System.out.println("Write Thread: "+e);
                 }
             }
         }).start();
@@ -142,8 +140,9 @@ public class MainWindow {
     }
     private void addSendChatClick(){
         chatWindow.getMessageButton().addMouseListener(new MouseAdapter() { 
+            @Override
             public void mousePressed(MouseEvent me) { 
-                if(chatWindow.getChatLabel().getText() != "Not chatting" && chatWindow.getMessageInput().getText().length() > 0){
+                if(!"Not chatting".equals(chatWindow.getChatLabel().getText()) && chatWindow.getMessageInput().getText().length() > 0){
                     chatWindow.getChatText().setText("");
                     if(me.getButton() == 1 && privateMode){
                         chatDao.sendMessagePrivate(chatDao.getChatUser(),chatDao.getReceiever(),chatWindow.getMessageInput().getText());
@@ -165,7 +164,7 @@ public class MainWindow {
             } 
         });
     }
-    public String nickNameInput(){
+    private String nickNameInput(){
         String value = "";
         while(value.length() < 1){
             value = JOptionPane.showInputDialog(null, "Chose nickname", 
@@ -209,6 +208,7 @@ public class MainWindow {
     private void addClickListiner(){
         for(int i = 0; i < friendsWindow.getNamePanel().getComponentCount(); i++){
             friendsWindow.getNamePanel().getComponent(i).addMouseListener(new MouseAdapter() { 
+                @Override
                 public void mousePressed(MouseEvent me) { 
                     if(me.getButton() == 3){
                         popUp(me.getComponent().getName());

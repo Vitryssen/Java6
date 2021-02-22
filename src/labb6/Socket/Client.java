@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ import labb6.DAO.ChatDAO;
 import labb6.DAO.ChatDAOImp;
 import labb6.DataStructures.Friend;
 import labb6.DataStructures.Message;
+import labb6.Exceptions.SystemExceptionHandler;
 
 /**
  *
@@ -95,14 +98,20 @@ public class Client implements HostListener {
     }
 
     public void connect() throws UnknownHostException, IOException {
-        hostSocket = new Socket(host, port);
-        out = new PrintWriter(hostSocket.getOutputStream());
-        in = new BufferedReader(
-                new InputStreamReader(hostSocket.getInputStream()));
-        connected = true;
-        new ListenerThread(this, in).start();
+        try{
+            hostSocket = new Socket(host, port);
+            out = new PrintWriter(hostSocket.getOutputStream());
+            in = new BufferedReader(
+                    new InputStreamReader(hostSocket.getInputStream()));
+            connected = true;
+        }
+        catch(UnknownHostException e){new SystemExceptionHandler().manageExceptionUnknownHost(e.toString());}
+        catch(IOException e){new SystemExceptionHandler().manageExceptionIO(e.toString());}
+        finally{
+            new ListenerThread(this, in).start();
+            new AliveThread().start();
+        }
     }
-
     private void sendRegister() {
         assertConnected();
         String message = String.format(register, nickName, fullName, ip);
@@ -112,7 +121,7 @@ public class Client implements HostListener {
 
     private void assertConnected(){
         if (!connected) {
-            System.out.println("Not connected");
+            new SystemExceptionHandler().manageExceptionNotConnected("Not connected when trying to register");
         }
     }
 
@@ -131,7 +140,7 @@ public class Client implements HostListener {
             addServerMessage(message, false);
         }
     }
-    public void addServerMessage(String old, boolean publicMode){
+    private void addServerMessage(String old, boolean publicMode){
         Friend newFriend = new Friend();
         //-------------------------------------
         String temp = old;
@@ -154,7 +163,7 @@ public class Client implements HostListener {
         }});  
         writeToFile.start();
     }
-    public void addFriend(String newFriend){
+    private void addFriend(String newFriend){
         Friend currentFriend = new Friend();
         String start = newFriend.substring(newFriend.indexOf("<", newFriend.indexOf("<")+2)+1);
         
@@ -172,7 +181,7 @@ public class Client implements HostListener {
         
         friends.add(currentFriend);
     }
-    public void removeFriend(String nick){
+    private void removeFriend(String nick){
         String newNick = nick.substring(nick.indexOf('>')+1);
         newNick = newNick.substring(1, newNick.length()-1);
         for(int i = 0; i < friends.size(); i++){
@@ -182,6 +191,24 @@ public class Client implements HostListener {
     }
     public List<Friend> getFriends(){
         return friends;
+    }
+    private class AliveThread extends Thread{
+        public void run(){
+            SocketAddress socketAddress = new InetSocketAddress(host, port);
+            while(true){
+                Socket socket = new Socket();
+                try{
+                    socket.connect(socketAddress, 2000);
+                    socket.close();
+                    connected = true;
+                    Thread.sleep(2000);
+                } catch (IOException ex) {
+                   new SystemExceptionHandler().manageExceptionSocketNotAlive(ex.toString());
+                } catch (InterruptedException ex) {
+                    System.out.println(ex);
+                }
+            }
+        }
     }
     private class ListenerThread extends Thread {
 
@@ -200,7 +227,7 @@ public class Client implements HostListener {
                     listener.messageRecieved(line);
                 }
             } catch (IOException ex) {
-                System.err.println("Failed to write to socket");
+                new SystemExceptionHandler().manageExceptionIO(ex.toString());
             }
         }
     }
