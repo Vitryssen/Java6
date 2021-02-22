@@ -4,14 +4,14 @@
  * Java 2
  * Lab 4
  */
-package labb4.IO;
+package labb6.IO;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
-import labb4.DataStructures.Friend;
-import labb4.DataStructures.Message;
+import labb6.DataStructures.Friend;
+import labb6.DataStructures.Message;
 
 /**
  *

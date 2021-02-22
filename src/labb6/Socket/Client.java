@@ -4,7 +4,7 @@
  * Java 2
  * Lab 4
  */
-package labb4.Socket;
+package labb6.Socket;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,10 +15,10 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
-import labb4.DAO.ChatDAO;
-import labb4.DAO.ChatDAOImp;
-import labb4.DataStructures.Friend;
-import labb4.DataStructures.Message;
+import labb6.DAO.ChatDAO;
+import labb6.DAO.ChatDAOImp;
+import labb6.DataStructures.Friend;
+import labb6.DataStructures.Message;
 
 /**
  *

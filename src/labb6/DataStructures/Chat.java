@@ -4,13 +4,13 @@
  * Java 2
  * Lab 4
  */
-package labb4.DataStructures;
+package labb6.DataStructures;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import labb4.IO.LogReader;
+import labb6.IO.LogReader;
 
 /**
  *

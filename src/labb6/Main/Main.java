@@ -4,10 +4,10 @@
  * Java 2
  * Lab 4
  */
-package labb4.Main;
+package labb6.Main;
 
 import java.io.IOException;
-import labb4.Windows.MainWindow;
+import labb6.Windows.MainWindow;
 
 /**
  *

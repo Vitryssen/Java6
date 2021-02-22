@@ -4,10 +4,10 @@
  * Java 2
  * Lab 4
  */
-package labb4.DAO;
+package labb6.DAO;
 
 import java.util.List;
-import labb4.DataStructures.Friend;
+import labb6.DataStructures.Friend;
 
 /**
  *

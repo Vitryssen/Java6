@@ -4,15 +4,15 @@
  * Java 2
  * Lab 4
  */
-package labb4.IO;
+package labb6.IO;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import labb4.DataStructures.Friend;
-import labb4.DataStructures.Message;
+import labb6.DataStructures.Friend;
+import labb6.DataStructures.Message;
 
 
 /**

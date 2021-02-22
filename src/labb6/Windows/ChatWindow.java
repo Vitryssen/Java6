@@ -4,7 +4,7 @@
  * Java 2
  * Lab 4
  */
-package labb4.Windows;
+package labb6.Windows;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

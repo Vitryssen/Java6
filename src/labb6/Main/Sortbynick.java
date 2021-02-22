@@ -4,9 +4,9 @@
  * Java 2
  * Lab 4
  */
-package labb4.Main;
+package labb6.Main;
 
-import labb4.DataStructures.Friend;
+import labb6.DataStructures.Friend;
 import java.util.Comparator;
 
 /**

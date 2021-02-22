@@ -4,15 +4,15 @@
  * Java 2
  * Lab 4
  */
-package labb4.DAO;
+package labb6.DAO;
 
 import java.util.Map;
 import java.util.List;
-import labb4.IO.LogWriter;
+import labb6.IO.LogWriter;
 import java.util.ArrayList;
-import labb4.DataStructures.Chat;
-import labb4.DataStructures.Friend;
-import labb4.DataStructures.Message;
+import labb6.DataStructures.Chat;
+import labb6.DataStructures.Friend;
+import labb6.DataStructures.Message;
 
 /**
  *

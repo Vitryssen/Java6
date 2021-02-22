@@ -4,7 +4,7 @@
  * Java 2
  * Lab 4
  */
-package labb4.Socket;
+package labb6.Socket;
 
 /**
  *

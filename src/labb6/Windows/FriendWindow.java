@@ -4,7 +4,7 @@
  * Java 2
  * Lab 4
  */
-package labb4.Windows;
+package labb6.Windows;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -16,10 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
-import labb4.DAO.ChatDAOImp;
-import labb4.DAO.ChatDAO;
-import labb4.DAO.FriendDAO;
-import labb4.DAO.FriendDAOImp;
+import labb6.DAO.ChatDAOImp;
+import labb6.DAO.ChatDAO;
+import labb6.DAO.FriendDAO;
+import labb6.DAO.FriendDAOImp;
 
 /**
  *

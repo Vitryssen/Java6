@@ -4,9 +4,9 @@
  * Java 2
  * Lab 4
  */
-package labb4.IO;
+package labb6.IO;
 
-import labb4.DataStructures.Friend;
+import labb6.DataStructures.Friend;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import labb4.Main.Sortbynick;
+import labb6.Main.Sortbynick;
 
 /**
  *

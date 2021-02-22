@@ -4,7 +4,7 @@
  * Java 2
  * Lab 4
  */
-package labb4.Windows;
+package labb6.Windows;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -17,9 +17,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.border.Border;
-import labb4.DAO.ChatDAOImp;
-import labb4.DataStructures.Friend;
-import labb4.DAO.ChatDAO;
+import labb6.DAO.ChatDAOImp;
+import labb6.DataStructures.Friend;
+import labb6.DAO.ChatDAO;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
@@ -29,9 +29,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
-import labb4.DAO.FriendDAO;
-import labb4.DAO.FriendDAOImp;
-import labb4.Socket.Client;
+import labb6.DAO.FriendDAO;
+import labb6.DAO.FriendDAOImp;
+import labb6.Socket.Client;
 /**
  *
  * @author André
