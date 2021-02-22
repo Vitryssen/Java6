@@ -16,6 +16,14 @@ import javax.swing.JOptionPane;
  * @author André
  */
 public class SystemExceptionHandler {
+    public void manageExceptionFileNotFound(String extra){
+        write(extra);
+        write("Created new friendlist becuse it was not found");
+        JOptionPane.showMessageDialog(null,
+            "Cant find friendlist file, creating a new one",
+            "Friendlist not found",
+            JOptionPane.ERROR_MESSAGE);
+    }
     public void manageExceptionSocketNotAlive(String ex){
         write(ex);
         int response = JOptionPane.showConfirmDialog(null, "No connection to server\nTry to reconnect? \nSelecting no will close the program", "No connection",
@@ -40,6 +48,13 @@ public class SystemExceptionHandler {
     }
     public void manageExceptionIO(String ex){
         write(ex);
+        JOptionPane.showMessageDialog(null,
+            "Failed to open/read file",
+            "File error",
+            JOptionPane.ERROR_MESSAGE);
+    }
+    public void manageExceptionIO(String ex, String extra){
+        write(ex+" "+extra);
         JOptionPane.showMessageDialog(null,
             "Failed to open/read file",
             "File error",

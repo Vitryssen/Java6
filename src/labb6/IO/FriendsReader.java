@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import labb6.Exceptions.SystemExceptionHandler;
 import labb6.Main.Sortbynick;
 
 /**
@@ -29,6 +30,9 @@ public class FriendsReader {
         {  
             this.workingPath = System.getProperty("user.dir");
             File file=new File(this.workingPath+"\\logs\\friends.list");    //creates a new file instance  
+            if(file.createNewFile()){
+                new SystemExceptionHandler().manageExceptionFriendlistNotFound();
+            }
             FileReader fr=new FileReader(file);   //reads the file  
             BufferedReader br=new BufferedReader(fr);  //creates a buffering character input stream  
             String line; 
@@ -51,13 +55,9 @@ public class FriendsReader {
             }
             Collections.sort(friends, new Sortbynick());
         }
-        catch (FileNotFoundException ex) 
-        {
-            System.out.println("Not found");
-        } 
         catch (IOException ex) 
         {
-            System.out.println(ex);
+            new SystemExceptionHandler().manageExceptionIO(ex.toString());
         }
     }
     public List<Friend> getFriendList(){

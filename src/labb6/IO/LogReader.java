@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import labb6.DataStructures.Friend;
 import labb6.DataStructures.Message;
+import labb6.Exceptions.SystemExceptionHandler;
 
 
 /**
@@ -79,7 +80,7 @@ public class LogReader {
         } 
         catch (IOException ex) 
         {
-            System.out.println(ex);
+            new SystemExceptionHandler().manageExceptionIO(ex.toString(), "I/O error in LogReader");
         }
     }
     public Map<String, List<Message>> getChats(){
