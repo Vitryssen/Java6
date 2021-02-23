@@ -52,6 +52,7 @@ public class MainWindow {
     private final JCheckBox privateButton = topWindow.getPrivateButton();
     //Variables
     boolean privateMode = false;
+    boolean exception = false;
     //Network socket
     private final Client readerThread = new Client(chatDao, "chatbot.miun.se", 8000);//Skolan : "chatbot.miun.se", 8000 hemma: "0.0.0.0", 8000
     public MainWindow() throws IOException{
@@ -103,17 +104,14 @@ public class MainWindow {
     private void updateThread(){
         new Thread(() -> {
             while(true){
-                // Runs inside of the Swing UI thread
                 SwingUtilities.invokeLater(() -> {
                     friendDao.setFriendlist(readerThread.getFriends());
                     populateFriendlist();
                     if(!"Not chatting".equals(chatWindow.getChatLabel().getText())){
                         if(privateMode){
-                            //chatDao.setPrivateChat(readerThread.getPrivateMessages());
                             loadPrivateChat();
                         }
                         else{
-                            //chatDao.setPublicChat(readerThread.getPublicMessages());
                             loadPublicChat();
                         }
                     }
@@ -171,7 +169,7 @@ public class MainWindow {
             value = JOptionPane.showInputDialog(null, "Chose nickname", 
                         "Nickname: ", JOptionPane.INFORMATION_MESSAGE);
             if(value == null){
-                value = "";
+                System.exit(0);
             }
             if(value.length() < 1)
                 JOptionPane.showMessageDialog(f, "Nickname cannot by empty");
@@ -219,7 +217,6 @@ public class MainWindow {
                         JLabel labelText = (JLabel) me.getComponent();
                         chatWindow.getChatLabel().setText("Chatting with "+labelText.getText());
                         chatWindow.getChatText().setText("");
-                        loadPrivateChat();
                     }
                 } 
             });
@@ -227,7 +224,7 @@ public class MainWindow {
     }
     private void loadPrivateChat(){
         chatWindow.getChatText().setText("");
-        List<String> history = chatDao.getChat(chatDao.getReceiever().getNick());
+        List<String> history = chatDao.updateChat(chatDao.getReceiever().getNick());
         for(int i = 0; i < history.size(); i++){
             chatWindow.getChatText().append(history.get(i));
         }
@@ -237,7 +234,7 @@ public class MainWindow {
         if(publicButton.isSelected()){
             chatDao.setReciever(chatDao.getChatUser().getNick());
             chatWindow.getChatLabel().setText("Chatting publicly");
-            List<String> messages = chatDao.getChat(chatDao.getReceiever().getNick());
+            List<String> messages = chatDao.updateChat(chatDao.getReceiever().getNick());
             for(int i = 0; i < messages.size(); i++){
                 chatWindow.getChatText().append(messages.get(i));
             }
@@ -245,11 +242,15 @@ public class MainWindow {
     }
     private void addPublicClick(){
         publicButton.addActionListener((ActionEvent e) -> { 
-            chatWindow.getChatLabel().setText("Not chatting");
+            chatWindow.getChatLabel().setText("Chatting publicly");
+            chatDao.setReciever(chatDao.getChatUser().getNick());
             privateButton.setSelected(false);
             privateMode = false;
             chatWindow.getChatText().setText("");
-            loadPublicChat();
+            List<String> messages = chatDao.getChat(chatDao.getChatUser().getNick());
+            for(int i = 0; i < messages.size(); i++){
+                chatWindow.getChatText().append(messages.get(i));
+            }
             topWindow.getShowPanel().setVisible(false);
             topWindow.getExitPanel().setVisible(false);
         });

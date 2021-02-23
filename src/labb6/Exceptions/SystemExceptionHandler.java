@@ -22,7 +22,7 @@ public class SystemExceptionHandler {
         JOptionPane.showMessageDialog(null,
             extra,
             "File error",
-            JOptionPane.ERROR_MESSAGE);
+            JOptionPane.INFORMATION_MESSAGE);
     }
     public void manageExceptionSocketNotAlive(String ex){
         write(ex);
@@ -80,14 +80,15 @@ public class SystemExceptionHandler {
         File file=new File(workingPath+"\\logs\\system.log");  
         Instant instant = Instant.now();
         try {
+            FileWriter fr;
             if (file.createNewFile()){
-                System.out.println("File is created!");
+                fr = new FileWriter(file, true);
+                fr.write("Time: "+instant+" Information: Created new system log\n");
             }
             else{
-                System.out.println("File already exists.");
+                fr = new FileWriter(file, true);
+                fr.write("Time: "+instant+" Information: "+error+"\n");
             }
-            FileWriter fr = new FileWriter(file, true);
-            fr.write("Time: "+instant+" Error: "+error+"\n");
             fr.close();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null,

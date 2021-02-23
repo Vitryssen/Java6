@@ -19,15 +19,12 @@ import labb6.Exceptions.SystemExceptionHandler;
  * @author André
  */
 public class LogWriter {
-    public LogWriter(Friend nick, List<Message> msg){
+    public LogWriter(Friend currentFriend, List<Message> msg){
         String workingPath = System.getProperty("user.dir");
-        File file=new File(workingPath+"\\logs\\"+nick.getNick()+nick.getTag()+".log");  
+        File file=new File(workingPath+"\\logs\\"+currentFriend.getNick()+currentFriend.getTag()+".log");  
         try {
             if (file.createNewFile()){
-                System.out.println("File is created!");
-            }
-            else{
-                System.out.println("File already exists.");
+                new SystemExceptionHandler().write("New file created for "+currentFriend.getNick());
             }
             FileWriter fr = new FileWriter(file, false);
             for(int i = 0; i < msg.size(); i++){

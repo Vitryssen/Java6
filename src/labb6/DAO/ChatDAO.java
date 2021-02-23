@@ -19,6 +19,7 @@ public interface ChatDAO {
     public void saveChat(String nick);
     public void sendMessagePublic(Friend newFriend, String msg);
     public void sendMessagePrivate(Friend author, Friend receiver, String msg);
+    public List<String> updateChat(String nick);
     //Getters
     public List<String> getChat(String nick);
     public Friend getReceiever();

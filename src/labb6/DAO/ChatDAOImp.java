@@ -68,6 +68,21 @@ public class ChatDAOImp implements ChatDAO{
         return returnList;
     }
     @Override
+    public List<String> updateChat(String nick){
+        List<String> returnList = new ArrayList<>();
+        List<Message> msgs = new ArrayList<>();
+        if(allChats.chatExists(nick))
+            msgs = allChats.getUserChat(nick);
+        for(int i = 0; i < msgs.size(); i++){
+            Friend author = msgs.get(i).getAuthor();
+            String newString = "";
+            if(author.getNick().length() > 0)
+               newString = "<"+author.getNick()+author.getTag()+"> "+msgs.get(i).getMessage()+"\n";
+            returnList.add(newString);
+        }
+        return returnList;
+    }
+    @Override
     public void setChatUser(String newUser) {
         this.chatUser.setNick(newUser);
     }

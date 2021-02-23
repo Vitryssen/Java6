@@ -26,10 +26,11 @@ public class LogReader {
     private List<Message> loadedMsgs = new ArrayList<Message>();
     private String workingPath;
     private final Map<String, List<Message>> userChats = new HashMap<String, List<Message>>(); 
+    private final SystemExceptionHandler logger = new SystemExceptionHandler();
     public void readFile(String fileUrl){
         String orgName = fileUrl;
         try
-        {  
+        {
             this.workingPath = System.getProperty("user.dir");
             File file=new File(this.workingPath+"\\logs\\");    //creates a new file instance
             //------------------------------------------------------------
@@ -68,6 +69,7 @@ public class LogReader {
             userChats.put(orgName, loadedMsgs); //Saves the chat to the given username
             loadedMsgs = new ArrayList<Message>();
             fr.close();
+            br.close();
         }
         catch (FileNotFoundException ex) 
         {
@@ -76,10 +78,11 @@ public class LogReader {
             loadedMsgs.add(currentMsg);
             userChats.put(orgName, loadedMsgs);
             loadedMsgs = new ArrayList<Message>();
+            logger.manageExceptionFileNotFound("Log for user "+orgName+" could not be found, creating a new one");
         } 
         catch (IOException ex) 
         {
-            new SystemExceptionHandler().manageExceptionIO(ex.toString(), "I/O error in LogReader");
+            logger.manageExceptionIO(ex.toString(), "I/O error in LogReader");
         }
     }
     public Map<String, List<Message>> getChats(){
