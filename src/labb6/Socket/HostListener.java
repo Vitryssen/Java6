@@ -6,10 +6,12 @@
  */
 package labb6.Socket;
 
+import labb6.Exceptions.CustomException;
+
 /**
  *
  * @author André
  */
 public interface HostListener {
-    void messageRecieved(String message);
+    void messageRecieved(String message) throws CustomException;
 }

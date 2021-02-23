@@ -21,7 +21,7 @@ public class SystemExceptionHandler {
         write(extra);
         JOptionPane.showMessageDialog(null,
             extra,
-            "File error",
+            "File information",
             JOptionPane.INFORMATION_MESSAGE);
     }
     public void manageExceptionSocketNotAlive(String ex){
@@ -50,7 +50,7 @@ public class SystemExceptionHandler {
         write(ex);
         JOptionPane.showMessageDialog(null,
             extra+" Thread interrupted during sleep",
-            "Error with thread",
+            "Thread interrupted",
             JOptionPane.ERROR_MESSAGE);
     }
     public void manageExceptionIO(String ex){
@@ -63,7 +63,7 @@ public class SystemExceptionHandler {
     public void manageExceptionIO(String ex, String extra){
         write(ex+" "+extra);
         JOptionPane.showMessageDialog(null,
-            "Failed to open/read file",
+            "Failed to open/read file "+extra,
             "File error",
             JOptionPane.ERROR_MESSAGE);
     }
@@ -83,7 +83,7 @@ public class SystemExceptionHandler {
             FileWriter fr;
             if (file.createNewFile()){
                 fr = new FileWriter(file, true);
-                fr.write("Time: "+instant+" Information: Created new system log\n");
+                fr.write("Time: "+instant+" Information: Created new system log\n"+error+"\n");
             }
             else{
                 fr = new FileWriter(file, true);
@@ -92,8 +92,8 @@ public class SystemExceptionHandler {
             fr.close();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null,
-            "Writing error to file failed",
-            "Cant write error to system log",
+            "Writing to system log failed, this is bad",
+            "Cant write to system log",
             JOptionPane.ERROR_MESSAGE);
         }
     }

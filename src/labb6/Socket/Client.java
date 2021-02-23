@@ -17,11 +17,14 @@ import java.net.SocketAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import labb6.DAO.ChatDAO;
 import labb6.DAO.ChatDAOImp;
 import labb6.DataStructures.Friend;
 import labb6.DataStructures.Message;
-import labb6.Exceptions.SystemExceptionHandler;
+import labb6.Exceptions.CustomException;
+import labb6.Exceptions.SystemExceptionHandler;	
 
 /**
  *
@@ -97,7 +100,7 @@ public class Client implements HostListener {
         register(name, name);
     }
 
-    public void connect() throws UnknownHostException, IOException {
+    public void connect(){
         try{
             hostSocket = new Socket(host, port);
             out = new PrintWriter(hostSocket.getOutputStream());
@@ -124,10 +127,37 @@ public class Client implements HostListener {
             new SystemExceptionHandler().manageExceptionNotConnected("Not connected when trying to register");
         }
     }
-
+    private static boolean validate(final String ip) {
+        String PATTERN = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
+        return ip.matches(PATTERN);
+    }
+    private void setUserIp(String message){
+        try {
+            String ip = message.substring(message.indexOf("/")+1, message.indexOf("and")-1);
+            if(validate(ip)){
+                String nick = message.substring(message.indexOf("online")+7, message.indexOf("."));
+                for(int i = 0; i < friends.size(); i++){
+                    if(friends.get(i).getNick().equals(nick))
+                        friends.get(i).setIp(ip);
+                }
+            }
+            else
+                throw new CustomException(ip+" is not an valid I");
+        } catch (CustomException ex) {
+            //Hande incorrect ip here
+        }
+    }
     @Override
-    public void messageRecieved(String message) {
-        if(message.contains("<FRIEND>")){
+    public void messageRecieved(String message) throws CustomException{
+        if(message.contains("<SERVER>")){
+            if(message.contains("you are from")){
+                setUserIp(message);
+            }
+            else if(message.contains("with your nickname")){
+                throw new CustomException(message);
+            }
+        }
+        else if(message.contains("<FRIEND>")){
             addFriend(message);
         }
         else if(message.contains("<LOGOUT>")){
@@ -139,6 +169,7 @@ public class Client implements HostListener {
         else if(message.contains("<PRIVATE>")){
             addServerMessage(message, false);
         }
+        System.out.println(message);
     }
     private void addServerMessage(String old, boolean publicMode){
         Friend newFriend = new Friend();
@@ -164,22 +195,29 @@ public class Client implements HostListener {
         writeToFile.start();
     }
     private void addFriend(String newFriend){
-        Friend currentFriend = new Friend();
-        String start = newFriend.substring(newFriend.indexOf("<", newFriend.indexOf("<")+2)+1);
-        
-        currentFriend.setNick(start.substring(0, start.indexOf(">")));
-        for(int i = 0; i < friends.size(); i++){
-            if(friends.get(i).getNick().equals(currentFriend.getNick()))
-                return;
+        try {
+            Friend currentFriend = new Friend();
+            String start = newFriend.substring(newFriend.indexOf("<", newFriend.indexOf("<")+2)+1);
+            
+            currentFriend.setNick(start.substring(0, start.indexOf(">")));
+            for(int i = 0; i < friends.size(); i++){
+                if(friends.get(i).getNick().equals(currentFriend.getNick()))
+                    return;
+            }
+            start = start.substring(start.indexOf(">")+2);
+            currentFriend.setName(start.substring(0, start.indexOf(">")));
+            start = start.substring(start.indexOf(">")+2);
+            if(validate(start.substring(0, start.indexOf(">"))))
+                currentFriend.setIp(start.substring(0, start.indexOf(">")));
+            else
+                throw new CustomException("Invalid Ip for new friend");
+            start = start.substring(start.indexOf(">")+2);
+            currentFriend.setImage(start.substring(0, start.indexOf(">")));
+            
+            friends.add(currentFriend);
+        } catch (CustomException ex) {
+            System.out.println(ex.getMessage());
         }
-        start = start.substring(start.indexOf(">")+2);
-        currentFriend.setName(start.substring(0, start.indexOf(">")));
-        start = start.substring(start.indexOf(">")+2);
-        currentFriend.setIp(start.substring(0, start.indexOf(">")));
-        start = start.substring(start.indexOf(">")+2);
-        currentFriend.setImage(start.substring(0, start.indexOf(">")));
-        
-        friends.add(currentFriend);
     }
     private void removeFriend(String nick){
         String newNick = nick.substring(nick.indexOf('>')+1);
@@ -228,6 +266,9 @@ public class Client implements HostListener {
                 }
             } catch (IOException ex) {
                 new SystemExceptionHandler().manageExceptionIO(ex.toString());
+            } catch (CustomException ex) {
+                //Handle incorrect message here
+                System.out.println(ex.getMessage());
             }
         }
     }
