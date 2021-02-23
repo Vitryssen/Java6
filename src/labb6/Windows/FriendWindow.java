@@ -1,8 +1,8 @@
 /*
  * André Nordlund
- * 2021-02-19
+ * 2021-02-23
  * Java 2
- * Lab 4
+ * Lab 6
  */
 package labb6.Windows;
 
@@ -16,8 +16,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
-import labb6.DAO.ChatDAOImp;
-import labb6.DAO.ChatDAO;
 import labb6.DAO.FriendDAO;
 import labb6.DAO.FriendDAOImp;
 
@@ -26,9 +24,9 @@ import labb6.DAO.FriendDAOImp;
  * @author André
  */
 public class FriendWindow extends JPanel {
-    private FriendDAO friendDao = new FriendDAOImp();
-    private JPanel friends = new JPanel();
-    private JPanel namePanel = new JPanel();
+    private final FriendDAO friendDao = new FriendDAOImp();
+    private final JPanel friends = new JPanel();
+    private final JPanel namePanel = new JPanel();
     public FriendWindow(){
         Border blackline;
         blackline = BorderFactory.createLineBorder(Color.black);

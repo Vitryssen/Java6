@@ -1,8 +1,8 @@
 /*
  * André Nordlund
- * 2021-02-12
+ * 2021-02-23
  * Java 2
- * Lab 4
+ * Lab 6
  */
 package labb6.Exceptions;
 
@@ -18,10 +18,9 @@ import javax.swing.JOptionPane;
 public class SystemExceptionHandler {
     public void manageExceptionFileNotFound(String extra){
         write(extra);
-        write("Created new friendlist becuse it was not found");
         JOptionPane.showMessageDialog(null,
-            "Cant find friendlist file, creating a new one",
-            "Friendlist not found",
+            extra,
+            "File error",
             JOptionPane.ERROR_MESSAGE);
     }
     public void manageExceptionSocketNotAlive(String ex){
@@ -45,6 +44,13 @@ public class SystemExceptionHandler {
             "Cant resolve hostname",
             JOptionPane.ERROR_MESSAGE);
         System.exit(0);
+    }
+    public void manageExceptionInterrupted(String ex, String extra){
+        write(ex);
+        JOptionPane.showMessageDialog(null,
+            extra+" Thread interrupted during sleep",
+            "Error with thread",
+            JOptionPane.ERROR_MESSAGE);
     }
     public void manageExceptionIO(String ex){
         write(ex);

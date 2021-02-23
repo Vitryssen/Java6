@@ -1,8 +1,8 @@
 /*
  * André Nordlund
- * 2021-02-19
+ * 2021-02-23
  * Java 2
- * Lab 4
+ * Lab 6
  */
 package labb6.IO;
 
@@ -25,7 +25,7 @@ import labb6.Exceptions.SystemExceptionHandler;
 public class LogReader {
     private List<Message> loadedMsgs = new ArrayList<Message>();
     private String workingPath;
-    private Map<String, List<Message>> userChats = new HashMap<String, List<Message>>(); 
+    private final Map<String, List<Message>> userChats = new HashMap<String, List<Message>>(); 
     public void readFile(String fileUrl){
         String orgName = fileUrl;
         try
@@ -71,7 +71,6 @@ public class LogReader {
         }
         catch (FileNotFoundException ex) 
         {
-            System.out.println("File not found");
             Friend currentFriend = new Friend();
             Message currentMsg = new Message(currentFriend, "");
             loadedMsgs.add(currentMsg);

@@ -1,8 +1,8 @@
 /*
  * André Nordlund
- * 2021-02-19
+ * 2021-02-23
  * Java 2
- * Lab 4
+ * Lab 6
  */
 package labb6.Socket;
 
@@ -90,7 +90,7 @@ public class Client implements HostListener {
             in.close();
             hostSocket.close();
         } catch (IOException ex) {
-            System.err.println(ex);
+            new SystemExceptionHandler().manageExceptionIO(ex.toString(), "Lost connection to socket before logout");
         }
     }
     public void register(String name) {
@@ -106,7 +106,7 @@ public class Client implements HostListener {
             connected = true;
         }
         catch(UnknownHostException e){new SystemExceptionHandler().manageExceptionUnknownHost(e.toString());}
-        catch(IOException e){new SystemExceptionHandler().manageExceptionIO(e.toString());}
+        catch(IOException e){new SystemExceptionHandler().manageExceptionIO(e.toString()+"Could not connect to host");}
         finally{
             new ListenerThread(this, in).start();
             new AliveThread().start();
@@ -205,7 +205,7 @@ public class Client implements HostListener {
                 } catch (IOException ex) {
                    new SystemExceptionHandler().manageExceptionSocketNotAlive(ex.toString());
                 } catch (InterruptedException ex) {
-                    System.out.println(ex);
+                    new SystemExceptionHandler().manageExceptionInterrupted(ex.toString(),"KeepAlive");
                 }
             }
         }

@@ -1,8 +1,8 @@
 /*
  * André Nordlund
- * 2021-02-19
+ * 2021-02-23
  * Java 2
- * Lab 4
+ * Lab 6
  */
 package labb6.DataStructures;
 
@@ -17,8 +17,8 @@ import labb6.IO.LogReader;
  * @author André
  */
 public class Chat {
-    private String author;
-    private Map<String, List<Message>> userChats = new HashMap<String, List<Message>>(); 
+    private final String author;
+    private final Map<String, List<Message>> userChats = new HashMap<String, List<Message>>(); 
     public Chat(String nickname){
       this.author = nickname;
     }

@@ -1,8 +1,8 @@
 /*
  * André Nordlund
- * 2021-02-19
+ * 2021-02-23
  * Java 2
- * Lab 4
+ * Lab 6
  */
 package labb6.Windows;
 
@@ -31,6 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 import labb6.DAO.FriendDAO;
 import labb6.DAO.FriendDAOImp;
+import labb6.Exceptions.SystemExceptionHandler;
 import labb6.Socket.Client;
 /**
  *
@@ -69,7 +70,7 @@ public class MainWindow {
         //----------------------------------------
         readerThread.connect();
         readerThread.register(nick);
-        writeThread();
+        updateThread();
         //----------------------------------------
         addPublicClick();
         addPrivateClick();
@@ -99,7 +100,7 @@ public class MainWindow {
             }
         });
     }
-    private void writeThread(){
+    private void updateThread(){
         new Thread(() -> {
             while(true){
                 // Runs inside of the Swing UI thread
@@ -121,7 +122,7 @@ public class MainWindow {
                     java.lang.Thread.sleep(100);
                 }
                 catch(InterruptedException e) {
-                    System.out.println("Write Thread: "+e);
+                    new SystemExceptionHandler().manageExceptionInterrupted(e.toString(),"Update");
                 }
             }
         }).start();

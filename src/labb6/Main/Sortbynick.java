@@ -1,8 +1,8 @@
 /*
  * André Nordlund
- * 2021-02-19
+ * 2021-02-23
  * Java 2
- * Lab 4
+ * Lab 6
  */
 package labb6.Main;
 
@@ -14,6 +14,7 @@ import java.util.Comparator;
  * @author André
  */
 public class Sortbynick implements Comparator<Friend>{
+    @Override
     public int compare(Friend a, Friend b){
         String alower = a.getNick().toLowerCase();
         String blower = b.getNick().toLowerCase();

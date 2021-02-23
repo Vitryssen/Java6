@@ -1,8 +1,8 @@
 /*
  * André Nordlund
- * 2021-02-19
+ * 2021-02-23
  * Java 2
- * Lab 4
+ * Lab 6
  */
 package labb6.IO;
 
@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 import labb6.DataStructures.Friend;
 import labb6.DataStructures.Message;
+import labb6.Exceptions.SystemExceptionHandler;
 
 /**
  *
@@ -34,7 +35,7 @@ public class LogWriter {
             }
             fr.close();
         } catch (IOException ex) {
-            System.out.println(ex);
+            new SystemExceptionHandler().manageExceptionIO(ex.toString(), "I/O error in LogWriter");
         }
     }
 }

@@ -1,8 +1,8 @@
 /*
  * André Nordlund
- * 2021-02-19
+ * 2021-02-23
  * Java 2
- * Lab 4
+ * Lab 6
  */
 package labb6.Windows;
 
@@ -34,7 +34,7 @@ public class TopWindow extends ComponentAdapter{
     private JPanel exitPanel = new JPanel();
     private JCheckBox privateButton = new JCheckBox("Private chat");
     private JCheckBox publicButton = new JCheckBox("Public chat");
-    private JButton exitButton = new JButton("Exit");
+    private final JButton exitButton = new JButton("Exit");
     public TopWindow(){
         Border blackline;
         blackline = BorderFactory.createLineBorder(Color.black);

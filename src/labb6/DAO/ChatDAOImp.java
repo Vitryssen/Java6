@@ -1,8 +1,8 @@
 /*
  * André Nordlund
- * 2021-02-19
+ * 2021-02-23
  * Java 2
- * Lab 4
+ * Lab 6
  */
 package labb6.DAO;
 
@@ -19,9 +19,9 @@ import labb6.DataStructures.Message;
  * @author André
  */
 public class ChatDAOImp implements ChatDAO{
-    private FriendDAO friendDao = new FriendDAOImp();
-    private Friend chatUser = new Friend();
-    private Friend chattingWith = new Friend();
+    private final FriendDAO friendDao = new FriendDAOImp();
+    private final Friend chatUser = new Friend();
+    private final Friend chattingWith = new Friend();
     private final Chat allChats = new Chat(chatUser.getNick());
     public ChatDAOImp(){
         
