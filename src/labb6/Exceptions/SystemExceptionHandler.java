@@ -9,6 +9,7 @@ package labb6.Exceptions;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.Instant;
 import javax.swing.JOptionPane;
 
 /**
@@ -77,6 +78,7 @@ public class SystemExceptionHandler {
     public void write(String error){
         String workingPath = System.getProperty("user.dir");
         File file=new File(workingPath+"\\logs\\system.log");  
+        Instant instant = Instant.now();
         try {
             if (file.createNewFile()){
                 System.out.println("File is created!");
@@ -85,7 +87,7 @@ public class SystemExceptionHandler {
                 System.out.println("File already exists.");
             }
             FileWriter fr = new FileWriter(file, true);
-            fr.write(error);
+            fr.write("Time: "+instant+" Error: "+error+"\n");
             fr.close();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null,
