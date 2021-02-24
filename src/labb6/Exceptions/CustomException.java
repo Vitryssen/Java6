@@ -11,16 +11,29 @@ package labb6.Exceptions;
  * @author André
  */
 public class CustomException extends Exception{
-    String message;
+    String message = null;
+    Integer code;
     public CustomException(){
-        System.out.println("custom");
+        super();
     }
     public CustomException(String msg){
         super(msg);
         this.message = msg;
     }
+    public CustomException(int code){
+        super();
+        this.code = code;
+    }
+    public CustomException(String msg, int code){
+        super(msg);
+        this.message = msg;
+        this.code = code;
+    }
     @Override
     public String getMessage(){
-        return message;
+        return this.message;
+    }
+    public int getCode(){
+        return this.code;
     }
 }

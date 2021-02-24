@@ -83,7 +83,8 @@ public class SystemExceptionHandler {
             FileWriter fr;
             if (file.createNewFile()){
                 fr = new FileWriter(file, true);
-                fr.write("Time: "+instant+" Information: Created new system log\n"+error+"\n");
+                fr.write("Time: "+instant+" Information: Created new system log\n");
+                fr.write("Time: "+instant+" Information: "+error+"\n");
             }
             else{
                 fr = new FileWriter(file, true);
