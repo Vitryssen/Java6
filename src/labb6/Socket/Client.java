@@ -148,6 +148,8 @@ public class Client implements HostListener {
     }
     @Override
     public void messageRecieved(String message) throws CustomException{
+        if(!validFormat(message))
+            throw new CustomException(message, 3);
         if(message.contains("<SERVER>")){
             if(message.contains("you are from")){
                 setUserIp(message);
@@ -168,6 +170,21 @@ public class Client implements HostListener {
         else if(message.contains("<PRIVATE>")){
             addServerMessage(message, false);
         }
+    }
+    public boolean validFormat(String msg){
+        int right = 0;
+        int left = 0;
+        for(int i = 0; i < msg.length(); i++){
+            if(msg.charAt(i) == '>')
+                right++;
+            if(msg.charAt(i) == '<')
+                left++;
+        }
+        if(right == left)
+            return true;
+        else
+            return false;
+        
     }
     private boolean nickExists(String nick){
         for(int i = 0; i < friends.size(); i++){

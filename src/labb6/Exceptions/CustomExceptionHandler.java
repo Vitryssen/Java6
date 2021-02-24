@@ -30,6 +30,9 @@ public class CustomExceptionHandler {
             case 2 -> {
                 manageMissingNick(ex);
             }
+            case 3 -> {
+                manageInvalidMessageFormat(ex);
+            }
         }
     }
     private void manageIpException(CustomException ex){
@@ -40,5 +43,8 @@ public class CustomExceptionHandler {
     }
     private void manageMissingNick(CustomException ex){
         logger.write("Code: "+ex.getCode()+" Error message: "+ex.getMessage()+"; Received a message that came from a friend not in the friendlist");
+    }
+    private void manageInvalidMessageFormat(CustomException ex){
+        logger.write("Code: "+ex.getCode()+" Error message: "+ex.getMessage()+"; Given message from server is incorrectly formatted");
     }
 }
