@@ -54,7 +54,7 @@ public class MainWindow {
     boolean privateMode = false;
     boolean exception = false;
     //Network socket
-    private final Client readerThread = new Client(chatDao, "chatbot.miun.se", 8000);//Skolan : "chatbot.miun.se", 8000 hemma: "0.0.0.0", 8000
+    private final Client readerThread = new Client(chatDao, "0.0.0.0", 8000);//Skolan : "chatbot.miun.se", 8000 hemma: "0.0.0.0", 8000
     public MainWindow() throws IOException{
         f=new JFrame();  
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

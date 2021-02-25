@@ -20,7 +20,6 @@ import java.util.List;
 import labb6.DAO.ChatDAO;
 import labb6.DAO.ChatDAOImp;
 import labb6.DataStructures.Friend;
-import labb6.DataStructures.Message;
 import labb6.Exceptions.CustomException;
 import labb6.Exceptions.CustomExceptionHandler;
 import labb6.Exceptions.SystemExceptionHandler;	

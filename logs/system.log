@@ -1,0 +1,6 @@
+Time: 2021-02-25T12:24:41.193616600Z Information: Created new system log
+Time: 2021-02-25T12:24:41.193616600Z Information: java.net.UnknownHostException: chatbot.miun.se
+Time: 2021-02-25T12:24:45.861425900Z Information: java.net.UnknownHostException: chatbot.miun.se
+Time: 2021-02-25T12:25:20.516879500Z Information: Log for user hej could not be found, creating a new one
+Time: 2021-02-25T12:25:49.937611200Z Information: New file created for hej
+Time: 2021-02-25T12:25:49.939099300Z Information: java.net.SocketException: Socket closed
